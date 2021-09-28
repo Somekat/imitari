@@ -1,0 +1,23 @@
+#[env]
+#CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+
+[tasks.format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--", "--check"]
+
+[tasks.clippy]
+command = "cargo"
+args = ["clippy", "--", "-D", "warnings"]
+
+[tasks.upgrade]
+install_crate = "cargo-edit"
+command = "cargo"
+args = ["upgrade"]
+
+[tasks.release]
+dependencies = [
+    "upgrade",
+    "format",
+    "clippy"
+]

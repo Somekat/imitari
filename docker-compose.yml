@@ -1,0 +1,38 @@
+ version: '3.8'
+
+services:
+  web:
+    image: ghcr.io/imitari/imitari:latest
+    container_name: imitari
+    restart: always
+    volumes:
+      - ./public:/usr/local/bin/public
+      - ./templates:/usr/local/bin/templates
+      - ./static:/usr/local/bin/static
+    environment:
+    BASE_URL:
+    AUTH_TOKEN:
+    AUTH_USER: 
+    AUTH_PASSWORD: 
+    NAME: 
+    URL: 0.0.0.0
+    PORT: 9000 # Run on any port you want
+    networks:
+      - traefik-public #changeme  
+    labels:
+     - "traefik.enable=true"
+     - "traefik.docker.network=traefik-public"
+
+      # Access Router
+     - "traefik.http.routers.image.rule=Host(`exmaple.org`)"
+     - "traefik.http.routers.image.tls.certresolver=letsencrypt"
+     - "traefik.http.routers.image.entrypoints=websecure"
+     - "traefik.http.routers.image.service=image-service"
+
+      # Service
+     - "traefik.http.services.image-service.loadbalancer.server.port=9000" #changeme 
+     - "traefik.http.services.image-service.loadbalancer.sticky.cookie=true"
+     - "traefik.http.services.image-service.loadbalancer.sticky.cookie.secure=true"
+networks:
+  traefik-public: #change name of network here
+    external: true
