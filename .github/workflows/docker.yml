@@ -47,7 +47,6 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
-          labels: latest
           tags: ${{ steps.docker_meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
