@@ -47,7 +47,7 @@ And there you have a running instance in background.
 
 ## Contributing
 
-Just fork the repo, make your own changes and then run with cargo.
+Just fork the repo, make your own changes and then run with cargo and then create a pull request.
 
 ## Issue or bugs
 
