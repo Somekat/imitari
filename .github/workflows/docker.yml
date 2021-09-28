@@ -40,10 +40,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile
-          platforms: linux/amd64
           push: true
-          tags: ghcr.io/andrevuillemot160/imitari:latest
+          tags: ghcr.io/imitari/imitari:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Move cache
