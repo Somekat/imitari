@@ -1,10 +1,6 @@
 name: Rust
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 env:
@@ -162,40 +158,41 @@ jobs:
             ${{ github.workspace }}/target/${{ matrix.triple.target }}/release/imitari
             ${{ github.workspace }}\target\release\imitari.exe
             ${{ github.workspace }}\target\${{ matrix.triple.target }}\release\imitari.exe
-
-  tests:
-    needs: [build]
-    name: Test ${{ matrix.os }} (rust ${{matrix.toolchain}})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-        toolchain:
-          - "1.54.0" # minimum supported rust version
-          - stable
-          - nightly
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: ${{ matrix.toolchain }}
-          override: true
-      - name: Check docs
-        run: cargo doc
-        if: matrix.toolchain == 'nightly'
-      - name: Execute tests (not mac)
-        run: cargo test
-        if: matrix.os != 'macos-latest'
-        env:
-          RUST_BACKTRACE: full
-      - name: Execute tests (mac)
-        run: cargo test -- --test-threads 1
-        if: matrix.os == 'macos-latest'
-        env:
-          RUST_BACKTRACE: full
+            
+#removed tests for now because takes too long
+#  tests:
+#    needs: [build]
+#    name: Test ${{ matrix.os }} (rust ${{matrix.toolchain}})
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        os:
+#          - ubuntu-latest
+#          - macos-latest
+#          - windows-latest
+#        toolchain:
+#          - "1.54.0" # minimum supported rust version
+#          - stable
+#          - nightly
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Install toolchain
+#        uses: actions-rs/toolchain@v1
+#        with:
+#          profile: minimal
+#          toolchain: ${{ matrix.toolchain }}
+#          override: true
+#      - name: Check docs
+#        run: cargo doc
+#        if: matrix.toolchain == 'nightly'
+#      - name: Execute tests (not mac)
+#        run: cargo test
+#        if: matrix.os != 'macos-latest'
+#        env:
+#         RUST_BACKTRACE: full
+#      - name: Execute tests (mac)
+#        run: cargo test -- --test-threads 1
+#        if: matrix.os == 'macos-latest'
+#        env:
+#          RUST_BACKTRACE: full
