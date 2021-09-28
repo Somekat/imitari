@@ -16,7 +16,7 @@ services:
     AUTH_PASSWORD: 
     NAME: 
     URL: 0.0.0.0
-    PORT: 9000 # Run on any port you want
+    PORT: 9000 # Run on any port you wish
     networks:
       - traefik-public #changeme  
     labels:
