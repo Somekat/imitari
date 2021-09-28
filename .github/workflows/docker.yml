@@ -27,15 +27,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GB_TOKEN }}
-      - name: Get hash of latest image
-        run: docker pull rustlang/rust:nightly-alpine && docker inspect --format='{{index .RepoDigests 0}}' golang:alpine > dockerhash.txt
-      - name: cache docker cache
-        uses: actions/cache@v2.1.2
-        with:
-          path: ${{ github.workspace }}/cache
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/go.mod') }}-${{ hashFiles('**/go.sum') }}-${{ hashFiles('**/dockerhash.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+      - name: Pull Rust Nightly
+        run: docker pull rustlang/rust:nightly-alpine
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
