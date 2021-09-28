@@ -16,7 +16,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v3
         with:
-          images: ghcr.io/imitari/imitari:latest,ghcr.io/andrevuillemot160/imitari:latest
+          images: ghcr.io/imitari/imitari,ghcr.io/andrevuillemot160/imitari
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         with:
