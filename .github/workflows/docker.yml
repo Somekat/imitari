@@ -29,4 +29,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
          push: true
-         tags: ghcr.io/imitari/imitari:latest,ghcr.io/andrevuillemot160/imitari:latest
+         tags: ghcr.io/imitari/imitari:latest
