@@ -13,12 +13,10 @@ The projects goals are to provide fast, efficient, and an easy way to deploy own
 ## Env File
 The `.env` file should be placed
 it will auto load an env in the same directory, or if there is none it will just get env variatbles. All config variatbles are very important
-
+The most important ones are these
 ```env
 BASE_URL="url used in json response"
 AUTH_TOKEN="api token for rest api"
-AUTH_USER="username for web"
-AUTH_PASSWORD="password for web"
 NAME="name of your service"
 URL="0.0.0.0"
 PORT=9000 # Any port you want this readme covers with 9000 port
