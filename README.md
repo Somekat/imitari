@@ -24,6 +24,11 @@ URL="0.0.0.0"
 PORT=9000 # Any port you want this readme covers with 9000 port
 ```
 
+## Note about AUTH_TOKEN
+
+To generate your `AUTH_TOKEN` on Linux you must use this command `openssl rand -base64 32` (needs OpenSSL installed)
+It will generate for use a base64 encrypted token and use it in AUTH_TOKEN
+
 ## Running in Docker
 
 To run this software on Docker you must have installed the Docker itself and docker-compose.
