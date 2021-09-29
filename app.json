@@ -22,8 +22,8 @@
       "required": false
     },
     "URL": {
-      "required": true
-      "value": "0.0.0.0"
+      "required": true,
+       "value": "0.0.0.0"
     },
     "AUTH_PASSWORD": {
       "required": false
