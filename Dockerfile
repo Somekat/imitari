@@ -18,4 +18,5 @@ WORKDIR /usr/local/bin
 COPY --from=builder /usr/local/cargo/bin/imitari .
 COPY --from=builder /usr/src/imitari/public ./public
 COPY --from=builder /usr/src/imitari/templates ./templates
+COPY --from=builder /usr/src/imitari/static/ ./static
 CMD ["imitari"]
