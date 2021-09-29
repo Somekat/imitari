@@ -19,7 +19,7 @@ BASE_URL="url used in json response"
 AUTH_TOKEN="api token for rest api"
 NAME="name of your service"
 URL="0.0.0.0"
-PORT=9000 # Any port you want this readme covers with 9000 port
+PORT="9000" # Any port you want this readme covers with 9000 port
 ```
 
 ## Note about AUTH_TOKEN
