@@ -45,6 +45,10 @@ And there you have a running instance in background.
 4. Create the .env file for configuration
 5. Run the executable and look for any logs!
 
+## Deploy to Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/imitari/imitari)
+
 ## Contributing
 
 Just fork the repo, make your own changes and then run with cargo and then create a pull request.
