@@ -1,4 +1,4 @@
- version: '3.8'
+version: '3.8'
 
 services:
   web:
@@ -10,13 +10,13 @@ services:
       - ./templates:/usr/local/bin/templates
       - ./static:/usr/local/bin/static
     environment:
-    BASE_URL:
-    AUTH_TOKEN:
-    AUTH_USER: 
-    AUTH_PASSWORD: 
-    NAME: 
-    URL: 0.0.0.0
-    PORT: 9000 # Run on any port you wish
+      BASE_URL: ""
+      AUTH_TOKEN: ""
+      AUTH_USER: ""
+      AUTH_PASSWORD: ""
+      NAME: ""
+      URL: "0.0.0.0"
+      PORT: "9000" # Run on any port you wish
     networks:
       - traefik-public #changeme  
     labels:

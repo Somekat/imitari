@@ -26,18 +26,17 @@ PORT=9000 # Any port you want this readme covers with 9000 port
 
 ## Note about AUTH_TOKEN
 
-To generate your `AUTH_TOKEN` on Linux you must use this command `openssl rand -base64 32` (needs OpenSSL installed)
+To generate your `AUTH_TOKEN` on Linux you must use this command `echo $(openssl rand -base64 32) | sed -r 's/[^a-zA-Z0-9]//g'` (needs OpenSSL and sed installed)
 It will generate for use a base64 encrypted token and use it in AUTH_TOKEN
 
 ## Running in Docker
 
 To run this software on Docker you must have installed the Docker itself and docker-compose.
 The compose file was configurated to work with [Traefik](https://github.com/traefik/traefik) reverse proxy.
-Open the `docker-compose.yml` file and inside of it, edit the values.
-After you are done, just run
+You must have `.env` file with all needed settings and after you are done, just run
 
 ```shell
-docker-compose up -d
+docker-compose --env-file .env up -d
 ```
 
 And there you have a running instance in background.
