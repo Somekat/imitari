@@ -1,0 +1,31 @@
+{
+  "name": "Imitari",
+  "description": "A lightweight ShareX-compatible image uploader server",
+  "keywords": ["rust", "actix"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/emk/heroku-buildpack-rust"
+    },
+    {
+      "url": "emk/rust"
+    }
+  ],
+  "stack": "container",
+  "env": {
+    "BASE_URL": {
+      "required": true
+    },
+    "AUTH_TOKEN": {
+      "required": true
+    },
+    "AUTH_USER": {
+      "required": false
+    },
+    "AUTH_PASSWORD": {
+      "required": false
+    },
+    "NAME": {
+      "required": true
+    }
+  }
+}
