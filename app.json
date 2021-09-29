@@ -13,7 +13,8 @@
   "stack": "container",
   "env": {
     "BASE_URL": {
-      "required": true
+      "required": true,
+      "value": "herokuapp.com"
     },
     "AUTH_TOKEN": {
       "required": true
