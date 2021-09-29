@@ -275,8 +275,8 @@ async fn main() -> std::io::Result<()> {
 	dotenv::dotenv().ok();
 	println!("Starting Server......");
 
-	let start = std::env::var("URL").expect("WE NEED A URL ");
-	let port = std::env::var("PORT").expect("WE NEED A port ");
+	let start = std::env::var("URL").expect("*sigh* Where is URL? Please set it in your .env file");
+	let port = std::env::var("PORT").expect("*sigh* Where is PORT? Please set it in your .env file");
 	env_logger::init();
 	HttpServer::new(|| {
 		let tera = Tera::new("templates/**/*").unwrap();
@@ -285,7 +285,7 @@ async fn main() -> std::io::Result<()> {
 			user: AUTH_USER.as_str().to_string(),
 			password: AUTH_PASSWORD.as_str().to_string(),
 		};
-		let protect_form = Cors::default().allow_any_origin().allow_any_method();
+		let protect_form = Cors::default();
 		let private_key = rand::thread_rng().gen::<[u8; 32]>();
 		println!("Data Ready");
 		App::new()
