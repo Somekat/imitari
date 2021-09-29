@@ -7,6 +7,7 @@ COPY . .
 RUN cargo install --all-features --path .
 
 FROM alpine:edge
+ENV RUST_BACKTRACE=full
 RUN apk update \
     && apk add --no-cache \
     ca-certificates \
