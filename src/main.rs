@@ -285,7 +285,7 @@ async fn main() -> std::io::Result<()> {
 			user: AUTH_USER.as_str().to_string(),
 			password: AUTH_PASSWORD.as_str().to_string(),
 		};
-		let protect_form = Cors::default();
+		let protect_form = Cors::default().allow_any_origin();
 		let private_key = rand::thread_rng().gen::<[u8; 32]>();
 		println!("Data Ready");
 		App::new()
