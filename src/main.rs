@@ -8,22 +8,14 @@ use actix_ratelimit::{MemoryStore, MemoryStoreActor, RateLimiter};
 use actix_web::{
 	delete,
 	dev::{Body, ServiceResponse},
-	error,
-	get,
+	error, get,
 	http::StatusCode,
 	middleware,
 	middleware::{
 		errhandlers::{ErrorHandlerResponse, ErrorHandlers},
 		Logger,
 	},
-	post,
-	web,
-	App,
-	Error,
-	HttpRequest,
-	HttpResponse,
-	HttpServer,
-	Result,
+	post, web, App, Error, HttpRequest, HttpResponse, HttpServer, Result,
 };
 use actix_web_httpauth::middleware::HttpAuthentication;
 use async_std::prelude::*;
@@ -35,7 +27,6 @@ use tera::Tera;
 mod id;
 
 mod models;
-use actix_cors::Cors;
 use lazy_static::lazy_static;
 use serde_json::json;
 
@@ -275,8 +266,8 @@ async fn main() -> std::io::Result<()> {
 	dotenv::dotenv().ok();
 	println!("Starting Server......");
 
-	let start = std::env::var("URL").expect("*sigh* Where is URL? Please set it in your .env file");
-	let port = std::env::var("PORT").expect("*sigh* Where is PORT? Please set it in your .env file");
+	let start = std::env::var("URL").unwrap_or_else(|_| "0.0.0.0".to_string());
+	let port = std::env::var("PORT").unwrap_or_else(|_| "9000".to_string());
 	env_logger::init();
 	HttpServer::new(|| {
 		let tera = Tera::new("templates/**/*").unwrap();
@@ -285,7 +276,6 @@ async fn main() -> std::io::Result<()> {
 			user: AUTH_USER.as_str().to_string(),
 			password: AUTH_PASSWORD.as_str().to_string(),
 		};
-		let protect_form = Cors::default().allow_any_origin();
 		let private_key = rand::thread_rng().gen::<[u8; 32]>();
 		println!("Data Ready");
 		App::new()
@@ -300,11 +290,7 @@ async fn main() -> std::io::Result<()> {
 			)
 			.data(auth_conf)
 			.service(index)
-			.service(
-				web::resource("/ui/upload")
-					.route(web::post().to(save_file))
-					.wrap(protect_form),
-			)
+			.service(web::resource("/ui/upload").route(web::post().to(save_file)))
 			.service(upload_ui)
 			.service(file_save_rest)
 			.service(delete_file)
