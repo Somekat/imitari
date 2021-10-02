@@ -25,9 +25,8 @@ use actix_web::{
 	Result,
 };
 use actix_web_httpauth::middleware::HttpAuthentication;
+use async_std::prelude::*;
 use futures::{StreamExt, TryStreamExt};
-use tokio::io::*;
-use tokio_compat_02::FutureExt;
 use web::Payload;
 mod auth;
 use rand::Rng;
@@ -51,9 +50,7 @@ pub static NAME: Lazy<String> = Lazy::new(|| std::env::var("NAME").expect("No NA
 #[delete("/{token}", wrap = "HttpAuthentication::bearer(auth::validator)")]
 async fn delete_file(file: web::Path<String>) -> Result<HttpResponse, Error> {
 	let filename = file.into_inner();
-	tokio::fs::remove_file(format!("./static/images/{}", filename))
-		.compat()
-		.await?;
+	async_std::fs::remove_file(format!("./static/images/{}", filename)).await?;
 	Ok(HttpResponse::Ok().json(json!({
 		"message": "deleted file"
 	})))
@@ -65,9 +62,7 @@ async fn delete_file(file: web::Path<String>) -> Result<HttpResponse, Error> {
 )]
 async fn delete_get(file: web::Path<String>) -> Result<HttpResponse, Error> {
 	let filename = file.into_inner();
-	tokio::fs::remove_file(format!("./static/images/{}", filename))
-		.compat()
-		.await?;
+	async_std::fs::remove_file(format!("./static/images/{}", filename)).await?;
 	Ok(HttpResponse::Ok().json(json!({
 		"message": "deleted file"
 	})))
@@ -136,7 +131,7 @@ async fn file_save_rest(req: HttpRequest, mut payload: Payload) -> Result<HttpRe
 	let valid;
 	if re.is_match(&filename) {
 		let filepath = format!("./static/images/{}", sanitize_filename::sanitize(&filename));
-		let mut f = tokio::fs::File::create(filepath).compat().await?;
+		let mut f = async_std::fs::File::create(filepath).await?;
 		while let Some(chunk) = payload.next().await {
 			let data = chunk.unwrap();
 			f.write_all(&data).await?;
@@ -186,7 +181,7 @@ async fn save_file(mut payload: Multipart) -> Result<HttpResponse, Error> {
 			println!("{}", filename);
 			let filepath = format!("./static/images/{}", sanitize_filename::sanitize(&filename));
 			f_n = filename.to_string();
-			let mut f = tokio::fs::File::create(filepath).compat().await?;
+			let mut f = async_std::fs::File::create(filepath).await?;
 			while let Some(chunk) = field.next().await {
 				let data = chunk.unwrap();
 				f.write_all(&data).await?;
@@ -212,7 +207,7 @@ async fn save_file(mut payload: Multipart) -> Result<HttpResponse, Error> {
 
 #[get("/")]
 async fn index() -> Result<HttpResponse, Error> {
-	let f = tokio::fs::read("./static/images/home.png").compat().await?;
+	let f = async_std::fs::read("./static/images/home.png").await?;
 	Ok(HttpResponse::Ok().content_type("image/png").body(f))
 }
 
