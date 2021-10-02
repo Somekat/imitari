@@ -17,6 +17,8 @@ The most important ones are these
 ```env
 BASE_URL="url used in json response"
 AUTH_TOKEN="api token for rest api"
+AUTH_USER="login for web ui"
+AUTH_PASSWORD="password for webui"
 NAME="name of your service"
 URL="0.0.0.0"
 PORT="9000" # Any port you want this readme covers with 9000 port
