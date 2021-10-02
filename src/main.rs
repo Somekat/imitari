@@ -234,7 +234,7 @@ fn not_found<B>(res: ServiceResponse<B>) -> Result<ErrorHandlerResponse<B>> {
 	Ok(ErrorHandlerResponse::Response(
 		res.into_response(
 			HttpResponse::NotFound()
-				.json(json!({"message": "not founf"}))
+				.json(json!({"message": "not found :/"}))
 				.into_body(),
 		),
 	))
