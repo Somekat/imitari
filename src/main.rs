@@ -7,14 +7,22 @@ use actix_multipart::Multipart;
 use actix_web::{
 	delete,
 	dev::{Body, ServiceResponse},
-	error, get,
+	error,
+	get,
 	http::StatusCode,
 	middleware,
 	middleware::{
 		errhandlers::{ErrorHandlerResponse, ErrorHandlers},
 		Logger,
 	},
-	post, web, App, Error, HttpRequest, HttpResponse, HttpServer, Result,
+	post,
+	web,
+	App,
+	Error,
+	HttpRequest,
+	HttpResponse,
+	HttpServer,
+	Result,
 };
 use actix_web_httpauth::middleware::HttpAuthentication;
 use futures::{StreamExt, TryStreamExt};
@@ -27,17 +35,18 @@ use tera::Tera;
 mod id;
 
 mod models;
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 use serde_json::json;
 
-lazy_static! {
-	pub static ref BASE_URL: String = std::env::var("BASE_URL").expect("BASE_URL not set");
-	pub static ref AUTH_TOKEN: String = std::env::var("AUTH_TOKEN").expect("No AUTH_TOKEN set");
-	pub static ref AUTH_USER: String = std::env::var("AUTH_USER").expect("No AUTH_USER set");
-	pub static ref AUTH_PASSWORD: String =
-		std::env::var("AUTH_PASSWORD").expect("No AUTH_PASSWORD set");
-	pub static ref NAME: String = std::env::var("NAME").expect("no NAME set");
-}
+pub static BASE_URL: Lazy<String> =
+	Lazy::new(|| std::env::var("BASE_URL").expect("BASE_URL not set"));
+pub static AUTH_TOKEN: Lazy<String> =
+	Lazy::new(|| std::env::var("AUTH_TOKEN").expect("No AUTH_TOKEN set"));
+pub static AUTH_USER: Lazy<String> =
+	Lazy::new(|| std::env::var("AUTH_USER").expect("No AUTH_USER set"));
+pub static AUTH_PASSWORD: Lazy<String> =
+	Lazy::new(|| std::env::var("AUTH_PASSWORD").expect("No AUTH_PASSWORD set"));
+pub static NAME: Lazy<String> = Lazy::new(|| std::env::var("NAME").expect("No NAME set"));
 
 #[delete("/{token}", wrap = "HttpAuthentication::bearer(auth::validator)")]
 async fn delete_file(file: web::Path<String>) -> Result<HttpResponse, Error> {
