@@ -1,10 +1,9 @@
 #![deny(clippy::all)]
-use std::{collections::HashMap, time::Duration};
+use std::collections::HashMap;
 
 use actix_files::Files;
 use actix_identity::{CookieIdentityPolicy, Identity, IdentityService};
 use actix_multipart::Multipart;
-use actix_ratelimit::{MemoryStore, MemoryStoreActor, RateLimiter};
 use actix_web::{
 	delete,
 	dev::{Body, ServiceResponse},
@@ -276,7 +275,6 @@ async fn main() -> std::io::Result<()> {
 	env_logger::init();
 	HttpServer::new(|| {
 		let tera = Tera::new("templates/**/*").unwrap();
-		let store = MemoryStore::new();
 		let auth_conf = models::Auth {
 			user: AUTH_USER.as_str().to_string(),
 			password: AUTH_PASSWORD.as_str().to_string(),
@@ -288,11 +286,6 @@ async fn main() -> std::io::Result<()> {
 			.wrap(middleware::Compress::default())
 			.service(Files::new("/images", "static/images"))
 			.service(Files::new("/static", "public"))
-			.wrap(
-				RateLimiter::new(MemoryStoreActor::from(store).start())
-					.with_interval(Duration::from_secs(60))
-					.with_max_requests(30),
-			)
 			.data(auth_conf)
 			.service(index)
 			.service(web::resource("/ui/upload").route(web::post().to(save_file)))
