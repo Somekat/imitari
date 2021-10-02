@@ -19,6 +19,5 @@ COPY --from=builder /usr/local/cargo/bin/imitari .
 COPY --from=builder /usr/src/imitari/public ./public
 COPY --from=builder /usr/src/imitari/templates ./templates
 COPY --from=builder /usr/src/imitari/static/ ./static
-RUN chmod 755 -R ./
-RUN chmod 777 /usr/local/bin/imitari
+RUN chmod 777 -R /usr/local/bin/public /usr/local/bin/templates /usr/local/bin/static /usr/local/bin/imitari
 CMD ["imitari"]
