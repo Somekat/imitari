@@ -23,6 +23,11 @@ NAME="name of your service"
 URL="0.0.0.0"
 PORT="9000" # Any port you want this readme covers with 9000 port
 ```
+If you don't want to use for example `AUTH_USER` and `AUTH_PASSWORD` just keep them empty like this
+```
+AUTH_USER=""
+AUTH_PASSWORD=""
+```
 
 ## Note about AUTH_TOKEN
 
